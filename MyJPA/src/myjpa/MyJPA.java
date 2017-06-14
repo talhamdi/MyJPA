@@ -19,7 +19,7 @@ public class MyJPA {
         jpa.create(record);
 
         for (Student l : list) {
-            System.out.println("Cod.: " + l.getId());
+            System.out.println("Student ID: " + l.getId() + " Student Name: " + l.getName() );
         }
     }
 
