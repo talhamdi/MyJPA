@@ -1,5 +1,6 @@
 package myjpa;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,19 +8,23 @@ import javax.persistence.Persistence;
 
 public class MyJPA {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         EntityManagerFactory objFactory = Persistence.createEntityManagerFactory("MyJPAPU");
-        Student record = new Student();
+        Student student = new Student();
         StudentJpaController jpa = new StudentJpaController(objFactory);
-        List<Student> list = jpa.findStudentEntities();
+        
+        student.setId(2);
+        student.setName("Yaser");
+        student.setAge(25);
+        student.setJoinDate(new Date(2014, 05, 05));      
 
-        record.setName("Test");
+        jpa.edit(student);
 
-        jpa.create(record);
+       List<Student> studentList = jpa.findStudentEntities();
 
-        for (Student l : list) {
-            System.out.println("Student ID: " + l.getId() + " Student Name: " + l.getName() );
+        for (Student list : studentList) {
+            System.out.println("Student ID: " + list.getId() + " Student Name: " + list.getName() + " Age: " + list.getAge() + " Join Date: " + list.getJoinDate() );
         }
     }
 
