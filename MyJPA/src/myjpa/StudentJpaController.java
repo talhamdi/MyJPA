@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import myjpa.exceptions.NonexistentEntityException;
@@ -101,6 +102,11 @@ public class StudentJpaController implements Serializable {
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Student.class));
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            Root<Student> rt = cq.from(Student.class);
+
+            cq.orderBy( cb.desc(rt.get("id")) );
+           
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -132,6 +138,9 @@ public class StudentJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    public void orderbyStudent(){
+        
     }
     
 }
