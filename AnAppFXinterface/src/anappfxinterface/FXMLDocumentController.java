@@ -8,6 +8,7 @@ package anappfxinterface;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -48,7 +49,17 @@ public class FXMLDocumentController implements Initializable {
     private ComboBox combMinutes;
     @FXML
     private TableView tableView;
+    @FXML
+    private TableColumn<Student, String> getName2;
+    @FXML
+    private TableColumn<Student, Date> birthdayColumn;
 
+    DateTimeFormatter myDateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    @FXML
+    private TableView<Student> tableView2;
+    @FXML
+    private TableColumn<Student, String> getName3;
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -58,6 +69,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //combHours.setValue("Hourse");
+        
         combHours.setItems(hourseList);
 
         //combMinutes.setValue("Minutes");
@@ -75,6 +87,7 @@ public class FXMLDocumentController implements Initializable {
         proList = FXCollections.observableArrayList(studentList);
 
         tableView.setItems(proList);
+        tableView2.setItems(proList);
         tableView.getColumns().addAll(FXMLDocumentController.getId(),
                 FXMLDocumentController.getName(),
                 FXMLDocumentController.getAge(),
@@ -84,6 +97,10 @@ public class FXMLDocumentController implements Initializable {
             System.out.println("Name.: " + l.getName());
         }
 
+        getName2.setCellValueFactory( new PropertyValueFactory("name") );
+        getName3.setCellValueFactory( new PropertyValueFactory("name") );
+        
+        
         // TODO
     }
 
@@ -133,5 +150,7 @@ public class FXMLDocumentController implements Initializable {
             textField1.setText((String) combHours.getValue() + ":" + (String) combMinutes.getValue());
         }
     }
+    
+    
 
 }
