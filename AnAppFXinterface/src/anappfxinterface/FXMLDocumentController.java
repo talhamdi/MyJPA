@@ -62,8 +62,18 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        
+        //EntityManager manager = objFactory.createEntityManager();
+        EntityManagerFactory objFactory = Persistence.createEntityManagerFactory("AnAppFXinterfacePU");
+        //EntityManager manager = objFactory.createEntityManager();
+        // Student student = new Student();
+        StudentJpaController jpa = new StudentJpaController(objFactory);
+         Student student = new Student();
+         //List<Student> studentList = jpa.findStudentEntities();
+         
+         student.setName("Saber");
+         jpa.create(student);
+        
     }
 
     @Override
