@@ -12,7 +12,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SortEvent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -63,6 +67,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         
+        /*
         //EntityManager manager = objFactory.createEntityManager();
         EntityManagerFactory objFactory = Persistence.createEntityManagerFactory("AnAppFXinterfacePU");
         //EntityManager manager = objFactory.createEntityManager();
@@ -71,9 +76,21 @@ public class FXMLDocumentController implements Initializable {
          Student student = new Student();
          //List<Student> studentList = jpa.findStudentEntities();
          
-         student.setName("Saber");
-         jpa.create(student);
+         
+         student.setId(14);
+         student.setName("Masri");
+        try {
+            // jpa.create(student);
+            jpa.edit(student);
+        } catch (Exception ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        */
         
+        //tableView.getS
+     //   Person person = taview.getSelectionModel().getSelectedItem();
+        Student student = (Student) tableView.getSelectionModel().getSelectedItem();
+        System.out.println(student.getName());    
     }
 
     @Override
@@ -110,7 +127,18 @@ public class FXMLDocumentController implements Initializable {
         getName2.setCellValueFactory( new PropertyValueFactory("name") );
         getName3.setCellValueFactory( new PropertyValueFactory("name") );
         
-        
+        tableView.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Student>() {
+            
+            
+           @Override
+            public void onChanged(ListChangeListener.Change<? extends Student> c) {
+               
+                
+                for (Student p : c.getList()) {
+                    System.out.println(p.getId().toString() + "  " + p.getName() );
+                }
+            }
+        });
         // TODO
     }
 
@@ -160,7 +188,21 @@ public class FXMLDocumentController implements Initializable {
             textField1.setText((String) combHours.getValue() + ":" + (String) combMinutes.getValue());
         }
     }
+
+    @FXML
+    private void handleTabelVieAction(SortEvent event) {
+        Student student = (Student) tableView.getSelectionModel().getSelectedItem();
+        System.out.println(student.getName());   
+    }
     
+     
+    
+    
+    //////////
+    
+    
+    
+    //////////
     
 
 }
